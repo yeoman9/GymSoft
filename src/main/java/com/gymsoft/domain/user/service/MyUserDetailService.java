@@ -1,6 +1,7 @@
 package com.gymsoft.domain.user.service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -62,6 +63,7 @@ public class MyUserDetailService implements UserDetailsService {
 		userInfo.setLastName(userDto.getLastName());
 		userInfo.setNickName(userDto.getNickName());
 		userInfo.setBirthDate(userDto.getBirthDate());
+		userInfo.setUser(user);
 		
 		Role role = new Role();
 		role.setName("USER");
@@ -72,6 +74,13 @@ public class MyUserDetailService implements UserDetailsService {
 		userRepository.save(user);
 		
 		return user;
+		
+	}
+	
+	public Optional<User> getUser(String username)
+	{
+		
+		return userRepository.findByUsername(username);
 		
 	}
 

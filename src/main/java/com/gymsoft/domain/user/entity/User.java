@@ -19,6 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +36,7 @@ public class User {
 	 private Long id;
 	
 	 private String username;
+	 @JsonIgnore
 	 private String password;
 	 private String accountLocked;
 	 private String accountExpired;
@@ -54,6 +57,7 @@ public class User {
 	 @JoinTable( name = "user_roles_mapping",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+	 @JsonIgnore
 	 private List<Role> userRoles;
 	 
 	 
