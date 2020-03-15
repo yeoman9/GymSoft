@@ -32,8 +32,12 @@ public class CustomerService{
 		
 		Customer customer = new Customer();
 		customer.setName(customerDto.getName());				
-		customer.setEmail(customerDto.getEmail());		
-		customer.setDateOfJoin(customerDto.getDoj());
+		customer.setEmail(customerDto.getEmail());	
+		customer.setMobile(customerDto.getMobile());
+		customer.setDateOfJoin(customerDto.getDateOfJoin());
+		customer.setLastDate(customerDto.getLastDate());
+		customer.setGender(customerDto.getGender());
+		customer.setPin(customerDto.getPin());		
 		
 		customerRepository.save(customer);
 		
