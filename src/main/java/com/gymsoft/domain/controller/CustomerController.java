@@ -2,6 +2,7 @@ package com.gymsoft.domain.controller;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gymsoft.commons.error.CustomSuccessResponse;
 import com.gymsoft.domain.dto.CustomerDTO;
 import com.gymsoft.domain.services.CustomerService;
+import com.gymsoft.domain.user.entity.Customer;
 import com.gymsoft.domain.user.entity.User;
 
 @RestController
@@ -38,6 +40,11 @@ public class CustomerController {
          body.setMessage("Customer created successfully..");
          body.setTimestamp(LocalDateTime.now());
          return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+	
+	@PostMapping(value="/list")
+    public List<Customer> lisAll(){
+         return customerService.getAllCustomers();
     }
 		
 }

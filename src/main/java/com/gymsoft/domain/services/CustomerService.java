@@ -1,5 +1,6 @@
 package com.gymsoft.domain.services;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -50,5 +51,9 @@ public class CustomerService{
 		return customerRepository.findByEmail(email);
 	}
 
+	public List<Customer> getAllCustomers()
+	{		
+		return customerRepository.findAll();
+	}
 
 }
