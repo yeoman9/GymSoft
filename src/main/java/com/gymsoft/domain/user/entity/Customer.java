@@ -42,6 +42,11 @@ public class Customer {
 	@Temporal(TemporalType.DATE)
 	private Date lastDate;
 	
+	private String avatar;
+	private String docImage;
+	private String kycType;
+	private String docNumber;
+	
 	@Transient
     public boolean isActive() {
         return lastDate.after(new Date());

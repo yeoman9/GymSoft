@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class CustomerController {
 	
 	
 	@PostMapping(value="/add")
-    public ResponseEntity<CustomSuccessResponse> create(@RequestBody CustomerDTO customerDto){
+    public ResponseEntity<CustomSuccessResponse> create(@ModelAttribute CustomerDTO customerDto){
          customerService.addCustomer(customerDto);
          
          CustomSuccessResponse body = new CustomSuccessResponse();
