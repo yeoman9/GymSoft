@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,5 +48,20 @@ public class CustomerController {
     public List<Customer> lisAll(){
          return customerService.getAllCustomers();
     }
+	
+	@PostMapping(value="/get")
+    public Optional<Customer> getCustomer(@RequestBody Long id){
 		
+         return customerService.getCustomer(id);
+    }
+		
+	@PostMapping(value="/update")
+    public ResponseEntity<CustomSuccessResponse> update(@ModelAttribute CustomerDTO customerDto){
+         customerService.updateCustomer(customerDto);
+         
+         CustomSuccessResponse body = new CustomSuccessResponse();
+         body.setMessage("Customer updated successfully..");
+         body.setTimestamp(LocalDateTime.now());
+         return new ResponseEntity<>(body, HttpStatus.OK);
+    }
 }

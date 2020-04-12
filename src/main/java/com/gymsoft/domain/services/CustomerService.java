@@ -47,8 +47,8 @@ public class CustomerService{
 		customer.setPin(customerDto.getPin());		
 		customer.setKycType(customerDto.getKycType());
 		customer.setDocNumber(customerDto.getDocNumber());
-		String avatarName = customerDto.getName() +"_"+ customerDto.getPin();
-		String docImageName = customerDto.getKycType()+"_"+ customerDto.getName() +"_"+ customerDto.getPin();
+		String avatarName = customerDto.getName() +"_"+ customerDto.getPin() + ".jpg";
+		String docImageName = customerDto.getKycType()+"_"+ customerDto.getName() +"_"+ customerDto.getPin()+".jpg";
 		
 		if(storeImage(customerDto.getAvatar(), avatarName)) {
 			customer.setAvatar(avatarName);
@@ -62,12 +62,12 @@ public class CustomerService{
 		return customer;
 		
 	}
-
+	
 	private boolean storeImage(MultipartFile imageFile, String name) {
 		try {
 			if(imageFile != null) {
 				byte[] fileBytes = imageFile.getBytes();
-				Path path = Paths.get("/photos/" + name +".jpg" );
+				Path path = Paths.get("/photos/" + name );
 	            Files.write(path, fileBytes);
 	            return true;
 			}
@@ -86,6 +86,43 @@ public class CustomerService{
 	public List<Customer> getAllCustomers()
 	{		
 		return customerRepository.findAll();
+	}
+
+	public Optional<Customer> getCustomer(Long id) {
+		return customerRepository.findById(id);
+	}
+
+	public void updateCustomer(CustomerDTO customerDto) {
+		Objects.requireNonNull(customerDto);
+		
+		Long id = customerDto.getId();
+		
+		Optional<Customer> customerFound = customerRepository.findById(id);
+		if(customerFound.isPresent()) {
+			Customer customer = customerFound.get();
+			customer.setName(customerDto.getName());				
+			customer.setEmail(customerDto.getEmail());	
+			customer.setMobile(customerDto.getMobile());
+			customer.setDateOfJoin(customerDto.getDateOfJoin());
+			customer.setLastDate(customerDto.getLastDate());
+			customer.setGender(customerDto.getGender());
+			customer.setPin(customerDto.getPin());		
+			customer.setKycType(customerDto.getKycType());
+			customer.setDocNumber(customerDto.getDocNumber());
+			String avatarName = customerDto.getName() +"_"+ customerDto.getPin();
+			String docImageName = customerDto.getKycType()+"_"+ customerDto.getName() +"_"+ customerDto.getPin();
+			
+			if(storeImage(customerDto.getAvatar(), avatarName)) {
+				customer.setAvatar(avatarName);
+			}
+			if(storeImage(customerDto.getDocImage(), docImageName)) {
+				customer.setDocImage(docImageName);
+			};
+			
+			customerRepository.save(customer);
+		}
+		
+		
 	}
 
 }
