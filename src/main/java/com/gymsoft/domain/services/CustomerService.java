@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -30,11 +31,18 @@ public class CustomerService{
 		
 		String customerEmail = customerDto.getEmail();
 		
-		Optional<Customer> customerFound = customerRepository.findByEmail(customerEmail);
+		Optional<Customer> customerFoundByEmail = customerRepository.findByEmail(customerEmail);
 		
-		if(customerFound.isPresent()) {
+		if(customerFoundByEmail.isPresent()) {
 			
 			throw new RuntimeException("Customer already exist with this email");
+		}
+		
+		Optional<Customer> customerFoundByPin = customerRepository.findByPin(customerDto.getPin());
+
+		if (customerFoundByPin.isPresent()) {
+
+			throw new RuntimeException("Customer already exist with this PIN");
 		}
 		
 		Customer customer = new Customer();
@@ -86,6 +94,24 @@ public class CustomerService{
 	public List<Customer> getAllCustomers()
 	{		
 		return customerRepository.findAll();
+	}
+	
+	public Integer getTotalCount()
+	{		
+		return customerRepository.findAll().size();
+	}
+	
+	public Integer getActiveCustomers()
+	{		
+		List<Customer> customers = customerRepository.findAll();
+		Iterator<Customer> itr = customers.iterator();
+		while(itr.hasNext()) {
+			Customer c = itr.next();
+			if(!c.isActive()) {
+				itr.remove();
+			}
+		}
+		return customers.size();
 	}
 
 	public Optional<Customer> getCustomer(Long id) {
