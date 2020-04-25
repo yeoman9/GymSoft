@@ -22,7 +22,7 @@ public class DashboardController {
 	public DashboardDTO data() {
 		DashboardDTO dashboardDTO = new DashboardDTO();
 		int total = customerService.getTotalCount();
-		int active = customerService.getActiveCustomers();
+		int active = customerService.getActiveCustomers().size();
 		
 		dashboardDTO.setTotalCustomers(total);
 		dashboardDTO.setActiveCustomers(active);		

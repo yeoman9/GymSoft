@@ -45,8 +45,16 @@ public class CustomerController {
     }
 	
 	@PostMapping(value="/list")
-    public List<Customer> lisAll(){
+    public List<Customer> list(@RequestBody String query){
+		if("active".equals(query)) {
+			return customerService.getActiveCustomers();
+		}
+		if("due".equals(query)) {
+			return customerService.getDueCustomers();
+		}
+		else {
          return customerService.getAllCustomers();
+		}
     }
 	
 	@PostMapping(value="/get")

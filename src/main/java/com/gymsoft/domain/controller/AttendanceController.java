@@ -28,12 +28,12 @@ public class AttendanceController {
 	@PostMapping(value = "/attendance")
 	public ResponseEntity<Object> data(@RequestBody String pin) {
 		Optional<Customer> customer = customerService.getCustomerByPin(pin);
-		if (customer.isPresent()) {
-			CustomSuccessResponse body = new CustomSuccessResponse();
-			body.setMessage("Welcome " + customer.get().getName() + "!");
-			body.setTimestamp(LocalDateTime.now());
-			return new ResponseEntity<>(body, HttpStatus.OK);
+		if (!customer.isPresent()) {
+			throw new RuntimeException("Invalid PIN");
 		}
-		return null;
+		CustomSuccessResponse body = new CustomSuccessResponse();
+		body.setMessage("Welcome " + customer.get().getName() + "!");
+		body.setTimestamp(LocalDateTime.now());
+		return new ResponseEntity<>(body, HttpStatus.OK);
 	}
 }

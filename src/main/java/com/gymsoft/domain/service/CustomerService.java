@@ -106,7 +106,7 @@ public class CustomerService{
 		return customerRepository.findAll().size();
 	}
 	
-	public Integer getActiveCustomers()
+	public List<Customer> getActiveCustomers()
 	{		
 		List<Customer> customers = customerRepository.findAll();
 		Iterator<Customer> itr = customers.iterator();
@@ -116,7 +116,7 @@ public class CustomerService{
 				itr.remove();
 			}
 		}
-		return customers.size();
+		return customers;
 	}
 
 	public Optional<Customer> getCustomer(Long id) {
@@ -154,6 +154,18 @@ public class CustomerService{
 		}
 		
 		
+	}
+
+	public List<Customer> getDueCustomers() {
+		List<Customer> customers = customerRepository.findAll();
+		Iterator<Customer> itr = customers.iterator();
+		while(itr.hasNext()) {
+			Customer c = itr.next();
+			if(c.isActive()) {
+				itr.remove();
+			}
+		}
+		return customers;
 	}
 
 }
