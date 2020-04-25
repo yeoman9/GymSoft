@@ -1,4 +1,4 @@
-package com.gymsoft.domain.services;
+package com.gymsoft.domain.service;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gymsoft.domain.dto.CustomerDTO;
-import com.gymsoft.domain.user.entity.Customer;
-import com.gymsoft.domain.user.repository.CustomerRepository;
+import com.gymsoft.domain.entity.Customer;
+import com.gymsoft.domain.repository.CustomerRepository;
 
 @Service("customerService")
 public class CustomerService{
@@ -89,6 +89,11 @@ public class CustomerService{
 	public Optional<Customer> getCustomer(String email)
 	{		
 		return customerRepository.findByEmail(email);
+	}
+	
+	public Optional<Customer> getCustomerByPin(String pin)
+	{		
+		return customerRepository.findByPin(pin);
 	}
 
 	public List<Customer> getAllCustomers()

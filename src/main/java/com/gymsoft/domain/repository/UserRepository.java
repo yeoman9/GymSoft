@@ -1,11 +1,11 @@
-package com.gymsoft.domain.user.repository;
+package com.gymsoft.domain.repository;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gymsoft.domain.user.entity.User;
+import com.gymsoft.domain.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

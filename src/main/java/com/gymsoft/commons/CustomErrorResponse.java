@@ -1,4 +1,4 @@
-package com.gymsoft.commons.error;
+package com.gymsoft.commons;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

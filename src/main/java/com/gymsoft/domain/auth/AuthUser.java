@@ -1,4 +1,4 @@
-package com.gymsoft.domain.user.auth;
+package com.gymsoft.domain.auth;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.gymsoft.domain.user.entity.User;
+import com.gymsoft.domain.entity.User;
 
 import lombok.Data;
 

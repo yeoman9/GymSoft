@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gymsoft.commons.error.CustomSuccessResponse;
+import com.gymsoft.commons.CustomSuccessResponse;
 import com.gymsoft.domain.dto.CustomerDTO;
-import com.gymsoft.domain.services.CustomerService;
-import com.gymsoft.domain.user.entity.Customer;
-import com.gymsoft.domain.user.entity.User;
+import com.gymsoft.domain.entity.Customer;
+import com.gymsoft.domain.entity.User;
+import com.gymsoft.domain.service.CustomerService;
 
 @RestController
 @RequestMapping("/apis/v1/customer")

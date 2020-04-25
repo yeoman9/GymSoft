@@ -1,4 +1,4 @@
-package com.gymsoft.domain.user.controller;
+package com.gymsoft.domain.controller;
 
 
 import static com.gymsoft.config.security.Constants.HEADER_STRING;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gymsoft.commons.error.CustomSuccessResponse;
+import com.gymsoft.commons.CustomSuccessResponse;
 import com.gymsoft.config.security.TokenProvider;
-import com.gymsoft.domain.user.dto.UserDTO;
-import com.gymsoft.domain.user.entity.User;
-import com.gymsoft.domain.user.service.MyUserDetailService;
+import com.gymsoft.domain.dto.UserDTO;
+import com.gymsoft.domain.entity.User;
+import com.gymsoft.domain.service.MyUserDetailService;
 
 @RestController
 @RequestMapping("/apis/v1/users")

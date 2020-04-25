@@ -1,4 +1,4 @@
-package com.gymsoft.domain.user.dto;
+package com.gymsoft.domain.dto;
 
 import java.util.Date;
 

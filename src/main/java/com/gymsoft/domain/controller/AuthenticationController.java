@@ -1,4 +1,4 @@
-package com.gymsoft.domain.user.controller;
+package com.gymsoft.domain.controller;
 
 import java.time.LocalDateTime;
 
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gymsoft.commons.error.CustomErrorResponse;
+import com.gymsoft.commons.CustomErrorResponse;
 import com.gymsoft.config.security.TokenProvider;
-import com.gymsoft.domain.user.auth.AuthToken;
-import com.gymsoft.domain.user.auth.LoginUser;
-import com.gymsoft.domain.user.service.MyUserDetailService;
+import com.gymsoft.domain.auth.AuthToken;
+import com.gymsoft.domain.auth.LoginUser;
+import com.gymsoft.domain.service.MyUserDetailService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

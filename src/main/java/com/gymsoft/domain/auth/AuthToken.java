@@ -1,4 +1,4 @@
-package com.gymsoft.domain.user.auth;
+package com.gymsoft.domain.auth;
 
 public class AuthToken {
 

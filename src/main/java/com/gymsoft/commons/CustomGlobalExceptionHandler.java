@@ -1,4 +1,4 @@
-package com.gymsoft.commons.error;
+package com.gymsoft.commons;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

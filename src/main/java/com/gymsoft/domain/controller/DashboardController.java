@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gymsoft.domain.dto.DashboardDTO;
-import com.gymsoft.domain.services.CustomerService;
+import com.gymsoft.domain.service.CustomerService;
 
 @RestController
 @RequestMapping("/apis/v1/dashboard")

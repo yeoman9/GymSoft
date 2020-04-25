@@ -1,4 +1,4 @@
-package com.gymsoft.domain.user.entity;
+package com.gymsoft.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

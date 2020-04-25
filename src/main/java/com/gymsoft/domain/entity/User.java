@@ -1,4 +1,4 @@
-package com.gymsoft.domain.user.entity;
+package com.gymsoft.domain.entity;
 
 import java.util.Date;
 import java.util.List;

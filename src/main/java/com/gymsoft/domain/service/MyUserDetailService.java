@@ -1,4 +1,4 @@
-package com.gymsoft.domain.user.service;
+package com.gymsoft.domain.service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,12 +12,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.gymsoft.domain.user.auth.AuthUser;
-import com.gymsoft.domain.user.dto.UserDTO;
-import com.gymsoft.domain.user.entity.Role;
-import com.gymsoft.domain.user.entity.User;
-import com.gymsoft.domain.user.entity.UserInfo;
-import com.gymsoft.domain.user.repository.UserRepository;
+import com.gymsoft.domain.auth.AuthUser;
+import com.gymsoft.domain.dto.UserDTO;
+import com.gymsoft.domain.entity.Role;
+import com.gymsoft.domain.entity.User;
+import com.gymsoft.domain.entity.UserInfo;
+import com.gymsoft.domain.repository.UserRepository;
 
 
 @Service("myUserDetailService")
