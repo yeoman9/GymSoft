@@ -10,7 +10,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,
         HibernateJpaAutoConfiguration.class})
-@EnableAspectJAutoProxy
 public class GymSoftApplication {
 
 	public static void main(String[] args) {

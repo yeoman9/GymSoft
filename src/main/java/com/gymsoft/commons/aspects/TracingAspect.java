@@ -14,13 +14,13 @@ public class TracingAspect {
 	Logger logger = LoggerFactory.getLogger(TracingAspect.class);
 
 	@Around("SystemArchitecture.repository() || SystemArchitecture.service()")
-	public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
+	public Object trace(ProceedingJoinPoint proceedingJP) throws Throwable {
 
 		String methodInformation = proceedingJP.getStaticPart().getSignature().toString();
 		logger.trace("Entering " + methodInformation);
 
 		try {
-			proceedingJP.proceed();
+			return proceedingJP.proceed();
 		} catch (Throwable ex) {
 			logger.error("Exception in " + methodInformation, ex);
 			throw ex;

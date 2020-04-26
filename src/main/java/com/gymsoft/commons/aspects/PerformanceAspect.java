@@ -15,13 +15,13 @@ public class PerformanceAspect{
 	Logger logger = LoggerFactory.getLogger(PerformanceAspect.class);
 
 	@Around("SystemArchitecture.repository()")
-	public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
+	public Object trace(ProceedingJoinPoint proceedingJP) throws Throwable {
 		String methodInformation = proceedingJP.getStaticPart().getSignature().toString();
 		StopWatch stopWatch = new StopWatch(methodInformation);
 		stopWatch.start();
 		
 		try {
-			proceedingJP.proceed();
+			return proceedingJP.proceed();
 		} finally {
 			stopWatch.stop();
 			logger.trace(stopWatch.shortSummary());
