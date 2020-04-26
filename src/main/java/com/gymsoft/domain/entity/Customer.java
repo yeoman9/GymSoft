@@ -14,13 +14,15 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name="customer")
-public class Customer {
+@EqualsAndHashCode(callSuper = false)
+public class Customer extends Auditable<Long>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

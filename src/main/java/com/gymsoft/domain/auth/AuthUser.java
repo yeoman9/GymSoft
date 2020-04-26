@@ -24,6 +24,7 @@ public class AuthUser implements UserDetails{
 	private String accountExpired;
 	private String accountLocked;
 	private String accountEnabled;
+	private Long userId;
 	
 	public AuthUser(User user){
 		this.username = user.getUsername();
@@ -31,6 +32,7 @@ public class AuthUser implements UserDetails{
 		this.accountEnabled = user.getAccountEnabled();
 		this.accountExpired = user.getAccountExpired();
 		this.accountLocked = user.getAccountLocked();
+		this.userId = user.getId();
 	}
 	
 	@Override
