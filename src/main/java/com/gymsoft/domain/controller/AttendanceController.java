@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gymsoft.commons.CustomSuccessResponse;
 import com.gymsoft.domain.dto.DashboardDTO;
 import com.gymsoft.domain.entity.Customer;
+import com.gymsoft.domain.service.AttendanceService;
 import com.gymsoft.domain.service.CustomerService;
 
 @RestController
@@ -24,6 +25,9 @@ public class AttendanceController {
 
 	@Autowired
     private CustomerService customerService;
+	
+	@Autowired
+	AttendanceService attendanceService;
 		
 	@PostMapping(value = "/attendance")
 	public ResponseEntity<Object> data(@RequestBody String pin) {
@@ -31,6 +35,9 @@ public class AttendanceController {
 		if (!customer.isPresent()) {
 			throw new RuntimeException("Invalid PIN");
 		}
+		
+		attendanceService.addAttendance(customer.get());
+		
 		CustomSuccessResponse body = new CustomSuccessResponse();
 		body.setMessage("Welcome " + customer.get().getName() + "!");
 		body.setTimestamp(LocalDateTime.now());
