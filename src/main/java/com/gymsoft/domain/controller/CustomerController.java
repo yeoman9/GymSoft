@@ -72,4 +72,10 @@ public class CustomerController {
          body.setTimestamp(LocalDateTime.now());
          return new ResponseEntity<>(body, HttpStatus.OK);
     }
+	
+	@PostMapping(value="/searchByName")
+    public List<Customer> update(@RequestBody String searchKey){
+		return customerService.searchByNameContains(searchKey);
+    }
+	
 }

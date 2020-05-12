@@ -140,8 +140,8 @@ public class CustomerService{
 			customer.setPin(customerDto.getPin());		
 			customer.setKycType(customerDto.getKycType());
 			customer.setDocNumber(customerDto.getDocNumber());
-			String avatarName = customerDto.getName() +"_"+ customerDto.getPin();
-			String docImageName = customerDto.getKycType()+"_"+ customerDto.getName() +"_"+ customerDto.getPin();
+			String avatarName = customerDto.getName() +"_"+ customerDto.getPin() + ".jpg";
+			String docImageName = customerDto.getKycType()+"_"+ customerDto.getName() +"_"+ customerDto.getPin() + ".jpg";
 			
 			if(storeImage(customerDto.getAvatar(), avatarName)) {
 				customer.setAvatar(avatarName);
@@ -167,5 +167,10 @@ public class CustomerService{
 		}
 		return customers;
 	}
+	
+	public List<Customer> searchByNameContains(String searchKey) {
+		return customerRepository.findByNameContainingIgnoreCase(searchKey);
+	}
+
 
 }
