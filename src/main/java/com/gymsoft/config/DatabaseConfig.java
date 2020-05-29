@@ -24,59 +24,66 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.gymsoft.domain", entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager")
+@EnableJpaRepositories( basePackages = "com.gymsoft.domain", entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager" )
 @EnableTransactionManagement
-public class DatabaseConfig {
+public class DatabaseConfig
+{
 
-	@Value("${spring.datasource.maxPoolSize}")
-	private int maxPoolSize;
+    @Value( "${spring.datasource.maxPoolSize}" )
+    private int maxPoolSize;
 
-	@Bean(name= "dbProperties")
-	@Primary
-	@ConfigurationProperties(prefix = "spring.datasource.user")
-	public DataSourceProperties userDataSourceProperties() {
-		return new DataSourceProperties();
-	}
+    @Bean( name = "dbProperties" )
+    @Primary
+    @ConfigurationProperties( prefix = "spring.datasource.user" )
+    public DataSourceProperties userDataSourceProperties()
+    {
+        return new DataSourceProperties();
+    }
 
-	@Bean
-	@Primary
-	@ConfigurationProperties(prefix = "spring.datasource.user.configuration")
-	public DataSource dataSource(@Qualifier("dbProperties") DataSourceProperties properties) {
-		return properties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
-	}
+    @Bean
+    @Primary
+    @ConfigurationProperties( prefix = "spring.datasource.user.configuration" )
+    public DataSource dataSource( @Qualifier( "dbProperties" ) DataSourceProperties properties )
+    {
+        return properties.initializeDataSourceBuilder().type( HikariDataSource.class ).build();
+    }
 
-	/*
-	 * Entity Manager Factory setup.
-	 */
-	@Primary
-	@Bean(name = "entityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-		factoryBean.setDataSource(dataSource(userDataSourceProperties()));
-		factoryBean.setPackagesToScan("com.gymsoft.domain");
-		factoryBean.setJpaVendorAdapter(jpaVendorAdapter());
-		factoryBean.setJpaProperties(jpaProperties());
-		factoryBean.setPersistenceUnitName("gymSoftPostgresJDBCPool");
-		return factoryBean;
-	}
+    /*
+     * Entity Manager Factory setup.
+     */
+    @Primary
+    @Bean( name = "entityManagerFactory" )
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory()
+    {
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setDataSource( dataSource( userDataSourceProperties() ) );
+        factoryBean.setPackagesToScan( "com.gymsoft.domain" );
+        factoryBean.setJpaVendorAdapter( jpaVendorAdapter() );
+        factoryBean.setJpaProperties( jpaProperties() );
+        factoryBean.setPersistenceUnitName( "gymSoftPostgresJDBCPool" );
+        return factoryBean;
+    }
 
-	@Bean
-	public JpaVendorAdapter jpaVendorAdapter() {
-		return new HibernateJpaVendorAdapter();
-	}
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter()
+    {
+        return new HibernateJpaVendorAdapter();
+    }
 
-	@Bean
-	@ConfigurationProperties(prefix = "spring.datasource")
-	public Properties jpaProperties() {
-		return new Properties();
-	}
+    @Bean
+    @ConfigurationProperties( prefix = "spring.datasource" )
+    public Properties jpaProperties()
+    {
+        return new Properties();
+    }
 
-	@Bean(name = "transactionManager")
-	@Autowired
-	@Primary
-	public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-		JpaTransactionManager txManager = new JpaTransactionManager();
-		txManager.setEntityManagerFactory(emf);
-		return txManager;
-	}
+    @Bean( name = "transactionManager" )
+    @Autowired
+    @Primary
+    public PlatformTransactionManager transactionManager( EntityManagerFactory emf )
+    {
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory( emf );
+        return txManager;
+    }
 }

@@ -8,11 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gymsoft.domain.entity.Payment;
 
-public interface PaymentRepository extends JpaRepository<Payment, Long> {
+public interface PaymentRepository extends JpaRepository<Payment, Long>
+{
 
-	Optional<Payment> findById(Long id);
+    Optional<Payment> findById( Long id );
 
-	Optional<Payment> findByCustomerIdAndDate(Long id, Date date);
+    Optional<Payment> findByCustomerIdAndDate( Long id, Date date );
 
-	List<Payment> findByCustomerId(Long id);	
+    List<Payment> findByCustomerId( Long id );
 }

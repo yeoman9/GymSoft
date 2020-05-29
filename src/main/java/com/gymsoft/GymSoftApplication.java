@@ -8,12 +8,13 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,
-        HibernateJpaAutoConfiguration.class})
-public class GymSoftApplication {
+@EnableAutoConfiguration( exclude = { DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class } )
+public class GymSoftApplication
+{
 
-	public static void main(String[] args) {
-		SpringApplication.run(GymSoftApplication.class, args);
-	}
+    public static void main( String[] args )
+    {
+        SpringApplication.run( GymSoftApplication.class, args );
+    }
 
 }

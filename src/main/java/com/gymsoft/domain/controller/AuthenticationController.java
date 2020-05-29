@@ -22,10 +22,11 @@ import com.gymsoft.domain.auth.AuthToken;
 import com.gymsoft.domain.auth.LoginUser;
 import com.gymsoft.domain.service.MyUserDetailService;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin( origins = "*", maxAge = 3600 )
 @RestController
-@RequestMapping("/token")
-public class AuthenticationController {
+@RequestMapping( "/token" )
+public class AuthenticationController
+{
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -36,29 +37,29 @@ public class AuthenticationController {
     @Autowired
     private MyUserDetailService userService;
 
-    @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
-    public ResponseEntity<?> register(@RequestBody LoginUser loginUser) {
+    @RequestMapping( value = "/generate-token", method = RequestMethod.POST )
+    public ResponseEntity<?> register( @RequestBody LoginUser loginUser )
+    {
 
-    	try {
-    		final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginUser.getUsername(),
-                            loginUser.getPassword()
-                    )
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            final String token = jwtTokenUtil.generateToken(authentication);
-            return ResponseEntity.ok(new AuthToken(token));
-    	}
-    	catch (BadCredentialsException e) {
-    		
-    		CustomErrorResponse error = new CustomErrorResponse();
-    		error.setTimestamp(LocalDateTime.now());
-    		error.setError("The user name or password is incorrect.");
-    		error.setStatus(HttpStatus.UNAUTHORIZED.value());
-    		
-    		return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
-		}
+        try
+        {
+            final Authentication authentication =
+                authenticationManager.authenticate( new UsernamePasswordAuthenticationToken( loginUser.getUsername(),
+                                                                                             loginUser.getPassword() ) );
+            SecurityContextHolder.getContext().setAuthentication( authentication );
+            final String token = jwtTokenUtil.generateToken( authentication );
+            return ResponseEntity.ok( new AuthToken( token ) );
+        }
+        catch( BadCredentialsException e )
+        {
+
+            CustomErrorResponse error = new CustomErrorResponse();
+            error.setTimestamp( LocalDateTime.now() );
+            error.setError( "The user name or password is incorrect." );
+            error.setStatus( HttpStatus.UNAUTHORIZED.value() );
+
+            return new ResponseEntity<>( error, HttpStatus.UNAUTHORIZED );
+        }
     }
 
 }

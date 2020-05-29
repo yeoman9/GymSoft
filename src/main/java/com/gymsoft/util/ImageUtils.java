@@ -6,61 +6,74 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-public class ImageUtils {
-	// compress the image bytes before storing it in the database
-	
-	public static byte[] compressBytes(byte[] data) {
+public class ImageUtils
+{
+    // compress the image bytes before storing it in the database
 
-		Deflater deflater = new Deflater();
-		deflater.setInput(data);
-		deflater.finish();
+    public static byte[] compressBytes( byte[] data )
+    {
 
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-		byte[] buffer = new byte[1024];
+        Deflater deflater = new Deflater();
+        deflater.setInput( data );
+        deflater.finish();
 
-		while (!deflater.finished()) {
-			int count = deflater.deflate(buffer);
-			outputStream.write(buffer, 0, count);
-		}
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream( data.length );
+        byte[] buffer = new byte[ 1024 ];
 
-		try {
-			outputStream.close();
+        while( !deflater.finished() )
+        {
+            int count = deflater.deflate( buffer );
+            outputStream.write( buffer, 0, count );
+        }
 
-		} catch (IOException e) {
+        try
+        {
+            outputStream.close();
 
-		}
+        }
+        catch( IOException e )
+        {
 
-		System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+        }
 
-		return outputStream.toByteArray();
+        System.out.println( "Compressed Image Byte Size - " + outputStream.toByteArray().length );
 
-	}
+        return outputStream.toByteArray();
 
-	// uncompress the image bytes before returning it to the angular application
+    }
 
-	public static byte[] decompressBytes(byte[] data) {
+    // uncompress the image bytes before returning it to the angular application
 
-		Inflater inflater = new Inflater();
-		inflater.setInput(data);
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+    public static byte[] decompressBytes( byte[] data )
+    {
 
-		byte[] buffer = new byte[1024];
-		try {
-			while (!inflater.finished()) {
-				int count = inflater.inflate(buffer);
-				outputStream.write(buffer, 0, count);
-			}
+        Inflater inflater = new Inflater();
+        inflater.setInput( data );
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream( data.length );
 
-			outputStream.close();
+        byte[] buffer = new byte[ 1024 ];
+        try
+        {
+            while( !inflater.finished() )
+            {
+                int count = inflater.inflate( buffer );
+                outputStream.write( buffer, 0, count );
+            }
 
-		} catch (IOException ioe) {
+            outputStream.close();
 
-		} catch (DataFormatException e) {
+        }
+        catch( IOException ioe )
+        {
 
-		}
+        }
+        catch( DataFormatException e )
+        {
 
-		return outputStream.toByteArray();
+        }
 
-	}
+        return outputStream.toByteArray();
+
+    }
 
 }

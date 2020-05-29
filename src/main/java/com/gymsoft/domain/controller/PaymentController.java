@@ -1,6 +1,5 @@
 package com.gymsoft.domain.controller;
 
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -18,14 +17,14 @@ import com.gymsoft.domain.service.CustomerService;
 import com.gymsoft.domain.service.PaymentService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
-public class PaymentController {
+@CrossOrigin( origins = "http://localhost:4200" )
+public class PaymentController
+{
 
-	@Autowired
+    @Autowired
     private CustomerService customerService;
-	
-	@Autowired
-	PaymentService paymentService;
-		
-	
+
+    @Autowired
+    PaymentService paymentService;
+
 }

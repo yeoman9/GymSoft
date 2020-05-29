@@ -27,39 +27,35 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="users")
-public class User {
-	
+@Table( name = "users" )
+public class User
+{
 
-	@Id
-	 @GeneratedValue(strategy=GenerationType.AUTO)
-	 private Long id;
-	
-	 private String username;
-	 @JsonIgnore
-	 private String password;
-	 private String accountLocked;
-	 private String accountExpired;
-	 private String accountEnabled;
-	 
-	 @Email
-	 @Column(name="email")
-	 private String email;
-	 
-	 @Temporal(TemporalType.TIMESTAMP)
-	 private Date creationDate;
-	 
-	 @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	 @JoinColumn(name="id")
-	 private UserInfo userInfo;
-	 
-	 @OneToMany(cascade = CascadeType.ALL)
-	 @JoinTable( name = "user_roles_mapping",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-	 @JsonIgnore
-	 private List<Role> userRoles;
-	 
-	 
-	 
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
+    private Long id;
+
+    private String username;
+    @JsonIgnore
+    private String password;
+    private String accountLocked;
+    private String accountExpired;
+    private String accountEnabled;
+
+    @Email
+    @Column( name = "email" )
+    private String email;
+
+    @Temporal( TemporalType.TIMESTAMP )
+    private Date creationDate;
+
+    @OneToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @JoinColumn( name = "id" )
+    private UserInfo userInfo;
+
+    @OneToMany( cascade = CascadeType.ALL )
+    @JoinTable( name = "user_roles_mapping", joinColumns = @JoinColumn( name = "user_id" ), inverseJoinColumns = @JoinColumn( name = "role_id" ) )
+    @JsonIgnore
+    private List<Role> userRoles;
+
 }

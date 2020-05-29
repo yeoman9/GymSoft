@@ -23,21 +23,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="attendance", 
-	uniqueConstraints = @UniqueConstraint(columnNames={"customer_id", "date"}))
-@EqualsAndHashCode(callSuper = false)
-public class Attendance extends Auditable<Long>{
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+@Table( name = "attendance", uniqueConstraints = @UniqueConstraint( columnNames = { "customer_id", "date" } ) )
+@EqualsAndHashCode( callSuper = false )
+public class Attendance extends Auditable<Long>
+{
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
+    private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
-	
-	
-	@Temporal(TemporalType.DATE)
-	private Date date;
-	
-	private String status;
+    @ManyToOne
+    @JoinColumn( name = "customer_id" )
+    private Customer customer;
+
+    @Temporal( TemporalType.DATE )
+    private Date date;
+
+    private String status;
 }

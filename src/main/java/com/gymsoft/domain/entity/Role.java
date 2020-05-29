@@ -13,14 +13,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="users_roles")
-public class Role {
-	 @Id
-	 @GeneratedValue(strategy=GenerationType.AUTO)
-	 @Column(name="role_id")
-	 private Long roleId; 
-	 
-	 private String name;
-	 
-	 private String description;
+@Table( name = "users_roles" )
+public class Role
+{
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
+    @Column( name = "role_id" )
+    private Long roleId;
+
+    private String name;
+
+    private String description;
 }

@@ -1,6 +1,5 @@
 package com.gymsoft.domain.controller;
 
-
 import static com.gymsoft.config.security.Constants.HEADER_STRING;
 import static com.gymsoft.config.security.Constants.TOKEN_PREFIX;
 
@@ -27,38 +26,41 @@ import com.gymsoft.domain.entity.User;
 import com.gymsoft.domain.service.MyUserDetailService;
 
 @RestController
-@RequestMapping("/apis/v1/users")
-@CrossOrigin(origins = "http://localhost:4200")
-public class UserController {
+@RequestMapping( "/apis/v1/users" )
+@CrossOrigin( origins = "http://localhost:4200" )
+public class UserController
+{
 
-	@Autowired
+    @Autowired
     private MyUserDetailService userService;
-	
-	@Autowired
-	private TokenProvider jwtTokenUtil;
-	
-	@PostMapping(value="/signup")
-    public ResponseEntity<CustomSuccessResponse> create(@RequestBody UserDTO userDto){
-         userService.registerUser(userDto);
-         CustomSuccessResponse body = new CustomSuccessResponse();
-         body.setMessage("User created successfully");
-         body.setTimestamp(LocalDateTime.now());
-         return new ResponseEntity<>(body, HttpStatus.OK);
+
+    @Autowired
+    private TokenProvider jwtTokenUtil;
+
+    @PostMapping( value = "/signup" )
+    public ResponseEntity<CustomSuccessResponse> create( @RequestBody UserDTO userDto )
+    {
+        userService.registerUser( userDto );
+        CustomSuccessResponse body = new CustomSuccessResponse();
+        body.setMessage( "User created successfully" );
+        body.setTimestamp( LocalDateTime.now() );
+        return new ResponseEntity<>( body, HttpStatus.OK );
     }
-	
-	@PostMapping(value="/user",produces = MediaType.APPLICATION_JSON_VALUE)
-	public Optional<User> getUser(HttpServletRequest req) {
-		String header = req.getHeader(HEADER_STRING);
-		String username = null;
-		String authToken = null;
-		if (header != null && header.startsWith(TOKEN_PREFIX)) {
-			authToken = header.replace(TOKEN_PREFIX, "");
 
-			username = jwtTokenUtil.getUsernameFromToken(authToken);
-		}
-		
-		return userService.getUser(username);
-	}
+    @PostMapping( value = "/user", produces = MediaType.APPLICATION_JSON_VALUE )
+    public Optional<User> getUser( HttpServletRequest req )
+    {
+        String header = req.getHeader( HEADER_STRING );
+        String username = null;
+        String authToken = null;
+        if( header != null && header.startsWith( TOKEN_PREFIX ) )
+        {
+            authToken = header.replace( TOKEN_PREFIX, "" );
 
-	
+            username = jwtTokenUtil.getUsernameFromToken( authToken );
+        }
+
+        return userService.getUser( username );
+    }
+
 }

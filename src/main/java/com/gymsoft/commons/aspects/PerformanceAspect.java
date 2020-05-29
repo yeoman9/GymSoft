@@ -10,22 +10,27 @@ import org.springframework.util.StopWatch;
 
 @Component
 @Aspect
-public class PerformanceAspect{
+public class PerformanceAspect
+{
 
-	Logger logger = LoggerFactory.getLogger(PerformanceAspect.class);
+    Logger logger = LoggerFactory.getLogger( PerformanceAspect.class );
 
-	@Around("SystemArchitecture.repository()")
-	public Object trace(ProceedingJoinPoint proceedingJP) throws Throwable {
-		String methodInformation = proceedingJP.getStaticPart().getSignature().toString();
-		StopWatch stopWatch = new StopWatch(methodInformation);
-		stopWatch.start();
-		
-		try {
-			return proceedingJP.proceed();
-		} finally {
-			stopWatch.stop();
-			logger.trace(stopWatch.shortSummary());
-		}
-	}
+    @Around( "SystemArchitecture.repository()" )
+    public Object trace( ProceedingJoinPoint proceedingJP ) throws Throwable
+    {
+        String methodInformation = proceedingJP.getStaticPart().getSignature().toString();
+        StopWatch stopWatch = new StopWatch( methodInformation );
+        stopWatch.start();
+
+        try
+        {
+            return proceedingJP.proceed();
+        }
+        finally
+        {
+            stopWatch.stop();
+            logger.trace( stopWatch.shortSummary() );
+        }
+    }
 
 }

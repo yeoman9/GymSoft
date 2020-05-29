@@ -21,46 +21,45 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
+{
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<CustomErrorResponse> customHandleNotFound(Exception ex, WebRequest request) {
+    @ExceptionHandler( RuntimeException.class )
+    public ResponseEntity<CustomErrorResponse> customHandleNotFound( Exception ex, WebRequest request )
+    {
 
         CustomErrorResponse errors = new CustomErrorResponse();
-        errors.setTimestamp(LocalDateTime.now());
-        errors.setError(ex.getMessage());
-        errors.setStatus(HttpStatus.NOT_FOUND.value());
+        errors.setTimestamp( LocalDateTime.now() );
+        errors.setError( ex.getMessage() );
+        errors.setStatus( HttpStatus.NOT_FOUND.value() );
 
-        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>( errors, HttpStatus.NOT_FOUND );
 
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public void constraintViolationException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value());
+    @ExceptionHandler( ConstraintViolationException.class )
+    public void constraintViolationException( HttpServletResponse response ) throws IOException
+    {
+        response.sendError( HttpStatus.BAD_REQUEST.value() );
     }
 
     // error handle for @Valid
     @Override
-    protected ResponseEntity<Object>
-    handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                 HttpHeaders headers,
-                                 HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid( MethodArgumentNotValidException ex,
+        HttpHeaders headers, HttpStatus status, WebRequest request )
+    {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", new Date());
-        body.put("status", status.value());
+        body.put( "timestamp", new Date() );
+        body.put( "status", status.value() );
 
-        //Get all fields errors
-        List<String> errors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(x -> x.getDefaultMessage())
-                .collect(Collectors.toList());
+        // Get all fields errors
+        List<String> errors =
+            ex.getBindingResult().getFieldErrors().stream().map( x -> x.getDefaultMessage() ).collect( Collectors.toList() );
 
-        body.put("errors", errors);
+        body.put( "errors", errors );
 
-        return new ResponseEntity<>(body, headers, status);
+        return new ResponseEntity<>( body, headers, status );
 
     }
 }

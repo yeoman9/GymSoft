@@ -9,16 +9,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-public class ExceptionLoggingAspect {
-	Logger logger = LoggerFactory.getLogger(ExceptionLoggingAspect.class);
+public class ExceptionLoggingAspect
+{
+    Logger logger = LoggerFactory.getLogger( ExceptionLoggingAspect.class );
 
-	@AfterThrowing(pointcut = "SystemArchitecture.repository()", throwing = "ex")
-	public void logDataAccessException(DataAccessException ex) {
-		logger.error("Problem in Repositories", ex);
-	}
+    @AfterThrowing( pointcut = "SystemArchitecture.repository()", throwing = "ex" )
+    public void logDataAccessException( DataAccessException ex )
+    {
+        logger.error( "Problem in Repositories", ex );
+    }
 
-	@AfterThrowing(pointcut = "SystemArchitecture.repository() || SystemArchitecture.service()", throwing = "ex")
-	public void logRuntimeException(RuntimeException ex) {
-		logger.error("RuntimeException", ex);
-	}
+    @AfterThrowing( pointcut = "SystemArchitecture.repository() || SystemArchitecture.service()", throwing = "ex" )
+    public void logRuntimeException( RuntimeException ex )
+    {
+        logger.error( "RuntimeException", ex );
+    }
 }

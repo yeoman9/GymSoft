@@ -18,27 +18,28 @@ import lombok.Getter;
 import lombok.Setter;
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners( AuditingEntityListener.class )
 @Getter
 @Setter
-public abstract class Auditable<U> {
+public abstract class Auditable<U>
+{
 
     @CreatedBy
-    @Column(name = "created_by")
+    @Column( name = "created_by" )
     protected U createdBy;
 
     @CreatedDate
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column( name = "created_date" )
+    @Temporal( TemporalType.TIMESTAMP )
     protected Date creationDate;
 
     @LastModifiedBy
-    @Column(name = "last_modified_by")
+    @Column( name = "last_modified_by" )
     protected U lastModifiedBy;
 
     @LastModifiedDate
-    @Column(name = "last_modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column( name = "last_modified_date" )
+    @Temporal( TemporalType.TIMESTAMP )
     protected Date lastModifiedDate;
 
 }

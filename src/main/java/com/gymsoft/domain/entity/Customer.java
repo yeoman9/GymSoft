@@ -20,38 +20,40 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="customer")
-@EqualsAndHashCode(callSuper = false)
-public class Customer extends Auditable<Long>{
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+@Table( name = "customer" )
+@EqualsAndHashCode( callSuper = false )
+public class Customer extends Auditable<Long>
+{
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
+    private Long id;
 
-	private String name;
-	private String mobile;
-	private String gender;
-	
-	@Column(unique = true)
-	private String pin;
+    private String name;
+    private String mobile;
+    private String gender;
 
-	@Email
-	@Column(name = "email")
-	private String email;
+    @Column( unique = true )
+    private String pin;
 
-	@Temporal(TemporalType.DATE)
-	private Date dateOfJoin;
-	
-	@Temporal(TemporalType.DATE)
-	private Date lastDate;
-	
-	private String avatar;
-	private String docImage;
-	private String kycType;
-	private String docNumber;
-	
-	@Transient
-    public boolean isActive() {
-        return lastDate.after(new Date());
+    @Email
+    @Column( name = "email" )
+    private String email;
+
+    @Temporal( TemporalType.DATE )
+    private Date dateOfJoin;
+
+    @Temporal( TemporalType.DATE )
+    private Date lastDate;
+
+    private String avatar;
+    private String docImage;
+    private String kycType;
+    private String docNumber;
+
+    @Transient
+    public boolean isActive()
+    {
+        return lastDate.after( new Date() );
     }
 
 }

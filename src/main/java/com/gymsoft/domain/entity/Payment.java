@@ -23,20 +23,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="payment")
-@EqualsAndHashCode(callSuper = false)
-public class Payment extends Auditable<Long>{
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+@Table( name = "payment" )
+@EqualsAndHashCode( callSuper = false )
+public class Payment extends Auditable<Long>
+{
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
+    private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
-	
-	
-	@Temporal(TemporalType.DATE)
-	private Date date;
-	
-	private int amount;
+    @ManyToOne
+    @JoinColumn( name = "customer_id" )
+    private Customer customer;
+
+    @Temporal( TemporalType.DATE )
+    private Date date;
+
+    private int amount;
 }
