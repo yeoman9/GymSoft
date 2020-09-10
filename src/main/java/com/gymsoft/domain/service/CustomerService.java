@@ -34,19 +34,20 @@ public class CustomerService
 
         String customerEmail = customerDto.getEmail();
 
-        Optional<Customer> customerFoundByEmail = customerRepository.findByEmail( customerEmail );
-
-        if( customerFoundByEmail.isPresent() )
+        if( null != customerEmail )
         {
+            Optional<Customer> customerFoundByEmail = customerRepository.findByEmail( customerEmail );
 
-            throw new RuntimeException( "Customer already exist with this email" );
+            if( customerFoundByEmail.isPresent() )
+            {
+                throw new RuntimeException( "Customer already exist with this email" );
+            }
         }
 
         Optional<Customer> customerFoundByPin = customerRepository.findByPin( customerDto.getPin() );
 
         if( customerFoundByPin.isPresent() )
         {
-
             throw new RuntimeException( "Customer already exist with this PIN" );
         }
 
