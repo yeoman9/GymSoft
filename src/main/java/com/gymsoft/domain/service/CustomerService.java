@@ -198,5 +198,10 @@ public class CustomerService
     {
         return customerRepository.findByNameContainingIgnoreCase( searchKey );
     }
+    
+    public void save( Customer customer )
+    {
+        customerRepository.save( customer );
+    }
 
 }

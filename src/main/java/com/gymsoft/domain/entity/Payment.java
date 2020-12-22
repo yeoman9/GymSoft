@@ -36,7 +36,12 @@ public class Payment extends Auditable<Long>
     private Customer customer;
 
     @Temporal( TemporalType.DATE )
-    private Date date;
-
+    private Date paymentFrom;
+    
+    @Temporal( TemporalType.DATE )
+    private Date paymentTo;
+       
     private int amount;
+    
+    private int months;
 }
