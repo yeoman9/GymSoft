@@ -31,10 +31,16 @@ public class PaymentController
     @PostMapping( value = "/add" )
     public ResponseEntity<CustomSuccessResponse> create( @ModelAttribute PaymentDTO paymentDto )
     {
-        paymentService.addPayment( paymentDto );
+        Payment payment =paymentService.addPayment( paymentDto );
+        
 
         CustomSuccessResponse body = new CustomSuccessResponse();
-        body.setMessage( "Payment added successfully." );
+        if(null == payment) {
+            body.setMessage( "Payment alredy added for selected Payment To Date." );
+        }else {
+            body.setMessage( "Payment added successfully." );
+        }
+        
         body.setTimestamp( LocalDateTime.now() );
         return new ResponseEntity<>( body, HttpStatus.OK );
     }

@@ -1,5 +1,6 @@
 package com.gymsoft.domain.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,26 +28,37 @@ public class PaymentService
 
     public Payment addPayment( PaymentDTO paymentDTO )
     {
-        Payment payment = new Payment();
-        String customerId = paymentDTO.getCustomerId();
-        Optional<Customer> customer = customerService.getCustomer( Long.valueOf( customerId ) );        
-        
-        payment.setPaymentFrom( paymentDTO.getPaymentFrom() );
-        payment.setPaymentTo( paymentDTO.getPaymentTo() );
-        payment.setAmount( Integer.parseInt( paymentDTO.getAmount() ) );
-        payment.setMonths( Integer.parseInt( paymentDTO.getMonths() ) );
+        String customerIdString = paymentDTO.getCustomerId();
+        Long customerId = Long.valueOf( customerIdString );
+        Optional<Customer> customer = customerService.getCustomer( customerId );        
         
         if( customer.isPresent() )
         {
-            payment.setCustomer( customer.get() );
-           
-            Customer c = customer.get();
-            c.setLastDate( paymentDTO.getPaymentTo() );
-            customerService.save( c );
-            
-            paymentRepository.save( payment );
-            
-            return payment;
+            List<Payment> isSamePayment =
+                paymentRepository.findByCustomerIdAndPaymentTo( customerId, paymentDTO.getPaymentTo() );
+
+            if( isSamePayment.isEmpty() )
+            {
+                Payment payment = new Payment();
+                payment.setPaymentFrom( paymentDTO.getPaymentFrom() );
+                payment.setPaymentTo( paymentDTO.getPaymentTo() );
+                payment.setAmount( Integer.parseInt( paymentDTO.getAmount() ) );
+                payment.setMonths( Integer.parseInt( paymentDTO.getMonths() ) );
+                payment.setCustomer( customer.get() );
+
+                Customer c = customer.get();
+                c.setLastDate( paymentDTO.getPaymentTo() );
+                customerService.save( c );
+
+                paymentRepository.save( payment );
+
+                return payment;
+            }
+            else
+            {
+                return null;
+            }
+
         }
         else
         {
