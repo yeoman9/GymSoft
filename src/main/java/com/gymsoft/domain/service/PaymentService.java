@@ -44,6 +44,7 @@ public class PaymentService
                 payment.setPaymentTo( paymentDTO.getPaymentTo() );
                 payment.setAmount( Integer.parseInt( paymentDTO.getAmount() ) );
                 payment.setMonths( Integer.parseInt( paymentDTO.getMonths() ) );
+                payment.setMode( paymentDTO.getMode() );
                 payment.setCustomer( customer.get() );
 
                 Customer c = customer.get();

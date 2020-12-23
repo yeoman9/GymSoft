@@ -44,4 +44,6 @@ public class Payment extends Auditable<Long>
     private int amount;
     
     private int months;
+    
+    private String mode;
 }

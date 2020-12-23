@@ -16,4 +16,5 @@ public class PaymentDTO
     private String amount;
     private String months;
     private String customerId;
+    private String mode;
 }
