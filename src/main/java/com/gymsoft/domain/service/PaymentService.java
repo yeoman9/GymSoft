@@ -1,5 +1,6 @@
 package com.gymsoft.domain.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +53,16 @@ public class PaymentService
             throw new RuntimeException( "Customer is required." );
         }
     }
+
+    
+    public List<Payment> getAllPayments()
+    {
+        return paymentRepository.findAll();
+    }
+    
+    public List<Payment> getPaymentsByCustomerId(Long customerId)
+    {
+        return paymentRepository.findByCustomerId(customerId);
+    }
+
 }
