@@ -24,4 +24,5 @@ public class CustomerDTO
     private MultipartFile docImage;
     private String kycType;
     private String docNumber;
+    private boolean isDeleted;
 }

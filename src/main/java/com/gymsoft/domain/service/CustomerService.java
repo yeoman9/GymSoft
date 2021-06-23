@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -113,12 +114,19 @@ public class CustomerService
 
     public List<Customer> getAllCustomers()
     {
-        return customerRepository.findAll();
+        return customerRepository.findAll()
+        		.stream()
+        		.filter( c-> !c.isDeleted() )
+        		.collect( Collectors.toList() );
     }
 
     public Integer getTotalCount()
     {
-        return customerRepository.findAll().size();
+        return customerRepository.findAll()
+        		.stream()
+        		.filter( c-> !c.isDeleted() )
+        		.collect( Collectors.toList() )
+        		.size();
     }
 
     public List<Customer> getActiveCustomers()
@@ -128,7 +136,7 @@ public class CustomerService
         while( itr.hasNext() )
         {
             Customer c = itr.next();
-            if( !c.isActive() )
+            if( !c.isActive() || c.isDeleted() )
             {
                 itr.remove();
             }
@@ -160,6 +168,7 @@ public class CustomerService
             customer.setPin( customerDto.getPin() );
             customer.setKycType( customerDto.getKycType() );
             customer.setDocNumber( customerDto.getDocNumber() );
+            customer.setDeleted( customerDto.isDeleted() );
             String avatarName = customerDto.getName() + "_" + customerDto.getPin() + ".jpg";
             String docImageName =
                 customerDto.getKycType() + "_" + customerDto.getName() + "_" + customerDto.getPin() + ".jpg";
@@ -186,7 +195,7 @@ public class CustomerService
         while( itr.hasNext() )
         {
             Customer c = itr.next();
-            if( c.isActive() )
+            if( c.isActive() || c.isDeleted() )
             {
                 itr.remove();
             }
@@ -196,7 +205,10 @@ public class CustomerService
 
     public List<Customer> searchByNameContains( String searchKey )
     {
-        return customerRepository.findByNameContainingIgnoreCase( searchKey );
+        return customerRepository.findByNameContainingIgnoreCase( searchKey )
+        		.stream()
+        		.filter( c-> !c.isDeleted() )
+        		.collect( Collectors.toList() );
     }
     
     public void save( Customer customer )

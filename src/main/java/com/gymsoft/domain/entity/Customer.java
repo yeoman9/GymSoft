@@ -49,6 +49,9 @@ public class Customer extends Auditable<Long>
     private String docImage;
     private String kycType;
     private String docNumber;
+    
+    @Column(columnDefinition = "boolean default false")
+    private boolean isDeleted;
 
     @Transient
     public boolean isActive()

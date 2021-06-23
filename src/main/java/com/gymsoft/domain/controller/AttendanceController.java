@@ -38,6 +38,11 @@ public class AttendanceController
             throw new RuntimeException( "Invalid PIN" );
         }
 
+        if( customer.get().isDeleted() ) 
+        {
+        	throw new RuntimeException( "Invalid PIN" );
+        }
+        
         attendanceService.addAttendance( customer.get() );
 
         CustomSuccessResponse body = new CustomSuccessResponse();
