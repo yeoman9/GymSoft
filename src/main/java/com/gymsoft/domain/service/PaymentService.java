@@ -78,4 +78,43 @@ public class PaymentService
         return paymentRepository.findByCustomerId(customerId);
     }
 
+	public int getTodayCount() {
+		
+		return paymentRepository.todayData().size();
+	}
+	
+	public int getTodayCollection() {
+		
+		return paymentRepository.todayData()
+				.stream()
+				.mapToInt( payment -> payment.getAmount() )
+				.sum();
+	}
+	
+	public int getWeeklyCount() {
+		
+		return paymentRepository.weeklyData().size();
+	}
+	
+	public int getWeeklyCollection() {
+		
+		return paymentRepository.weeklyData()
+				.stream()
+				.mapToInt( payment -> payment.getAmount() )
+				.sum();
+	}
+	
+	public int getMonthlyCount() {
+		
+		return paymentRepository.monthlyData().size();
+	}
+	
+	public int getMonthlyCollection() {
+		
+		return paymentRepository.monthlyData()
+				.stream()
+				.mapToInt( payment -> payment.getAmount() )
+				.sum();
+	}
+
 }

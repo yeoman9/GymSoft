@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gymsoft.domain.dto.DashboardDTO;
+import com.gymsoft.domain.dto.CustemerCountDTO;
+import com.gymsoft.domain.dto.PaymentCountDTO;
 import com.gymsoft.domain.service.CustomerService;
+import com.gymsoft.domain.service.PaymentService;
 
 @RestController
 @RequestMapping( "/apis/v1/dashboard" )
@@ -17,18 +19,45 @@ public class DashboardController
 
     @Autowired
     private CustomerService customerService;
+    
+    @Autowired
+    private PaymentService paymentService;
 
-    @PostMapping( value = "/data" )
-    public DashboardDTO data()
+    @PostMapping( value = "/customerCount" )
+    public CustemerCountDTO customerCount()
     {
-        DashboardDTO dashboardDTO = new DashboardDTO();
+    	CustemerCountDTO customerCountDTO = new CustemerCountDTO();
         int total = customerService.getTotalCount();
         int active = customerService.getActiveCustomers().size();
 
-        dashboardDTO.setTotalCustomers( total );
-        dashboardDTO.setActiveCustomers( active );
-        dashboardDTO.setInActiveCustomers( total - active );
+        customerCountDTO.setTotalCustomers( total );
+        customerCountDTO.setActiveCustomers( active );
+        customerCountDTO.setInActiveCustomers( total - active );
 
-        return dashboardDTO;
+        return customerCountDTO;
+    }
+    
+    @PostMapping( value = "/paymentCount" )
+    public PaymentCountDTO paymentCount()
+    {
+    	PaymentCountDTO paymentCountDTO = new PaymentCountDTO();
+    	
+    	int todayCount = paymentService.getTodayCount();
+    	int weeklyCount = paymentService.getWeeklyCount();
+    	int monthlyCount = paymentService.getMonthlyCount();
+    	
+    	int todayCollection = paymentService.getTodayCollection();
+    	int weeklyCollection = paymentService.getWeeklyCollection();
+    	int monthlyCollection = paymentService.getMonthlyCollection();
+    	
+    	
+    	paymentCountDTO.setTodayCollection( todayCollection );
+    	paymentCountDTO.setWeeklyCollection( weeklyCollection );
+    	paymentCountDTO.setMonthlyCollection( monthlyCollection );
+    	paymentCountDTO.setTodayCount( todayCount );
+    	paymentCountDTO.setMonthlyCount( monthlyCount );
+    	paymentCountDTO.setWeeklyCount( weeklyCount );
+
+        return paymentCountDTO;
     }
 }
