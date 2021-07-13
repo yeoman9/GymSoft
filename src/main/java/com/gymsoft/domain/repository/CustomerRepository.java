@@ -21,5 +21,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>
     List<Customer> findByNameContainingIgnoreCase( String searchKey );
 
     List<Customer> findAll();
+    
+    List<Customer> findByIsDeletedTrue();
 
 }

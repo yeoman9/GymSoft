@@ -2,11 +2,14 @@ package com.gymsoft.domain.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import com.gymsoft.domain.dto.MonthWisePaymentDTO;
 import com.gymsoft.domain.entity.Payment;
 
 public interface PaymentRepository extends JpaRepository<Payment, Long>
@@ -32,4 +35,13 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>
     		+ "WHERE date_trunc('month', now()) <= created_date AND\n"
     		+ "created_date < date_trunc('month', now()) + interval '1 month'", nativeQuery = true ) 
     List<Payment> monthlyData();
+    
+    @Query( value = "select new com.gymsoft.domain.dto.MonthWisePaymentDTO(to_char(created_date,'MM') as month, sum(amount) as total) \n"
+    		+ "from Payment\n"
+    		+ "where extract(year from created_date) = :year\n"
+    		+ "group by month\n"
+    		+ "order by month" )
+    List<MonthWisePaymentDTO> getMonthWisePayments( @Param("year") int year );
+    
+    
 }

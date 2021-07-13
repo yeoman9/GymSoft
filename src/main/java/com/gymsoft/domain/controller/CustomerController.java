@@ -55,6 +55,14 @@ public class CustomerController
         {
             return customerService.getDueCustomers();
         }
+        if( "aboutToDue".equals( query ) )
+        {
+            return customerService.getAboutToDueCustomers();
+        }
+        if("deleted".equals( query ) ) 
+        {
+        	return customerService.getDeletedCustomers();
+        }
         else
         {
             return customerService.getAllCustomers();

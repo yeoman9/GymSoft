@@ -136,7 +136,22 @@ public class CustomerService
         while( itr.hasNext() )
         {
             Customer c = itr.next();
-            if( !c.isActive() || c.isDeleted() )
+            if( !c.isActive() || c.isAboutToDue() || c.isDeleted() )
+            {
+                itr.remove();
+            }
+        }
+        return customers;
+    }
+    
+    public List<Customer> getAboutToDueCustomers()
+    {
+        List<Customer> customers = customerRepository.findAll();
+        Iterator<Customer> itr = customers.iterator();
+        while( itr.hasNext() )
+        {
+            Customer c = itr.next();
+            if( !c.isAboutToDue() || c.isDeleted() )
             {
                 itr.remove();
             }
@@ -195,7 +210,7 @@ public class CustomerService
         while( itr.hasNext() )
         {
             Customer c = itr.next();
-            if( c.isActive() || c.isDeleted() )
+            if( c.isActive() || c.isAboutToDue() || c.isDeleted() )
             {
                 itr.remove();
             }
@@ -215,5 +230,10 @@ public class CustomerService
     {
         customerRepository.save( customer );
     }
+
+	public List<Customer> getDeletedCustomers() 
+	{
+		return customerRepository.findByIsDeletedTrue();
+	}
 
 }

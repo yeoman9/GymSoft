@@ -1,5 +1,7 @@
 package com.gymsoft.domain.entity;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -57,6 +59,13 @@ public class Customer extends Auditable<Long>
     public boolean isActive()
     {
         return lastDate.after( new Date() );
+    }
+    
+    @Transient
+    public boolean isAboutToDue()
+    {
+    	LocalDate date = LocalDate.now().plusDays( 3 );
+        return isActive() && lastDate.before( Date.from( date.atStartOfDay( ZoneId.systemDefault() ).toInstant() ) );
     }
 
 }

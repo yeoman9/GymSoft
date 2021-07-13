@@ -1,12 +1,16 @@
 package com.gymsoft.domain.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gymsoft.domain.dto.CustemerCountDTO;
+import com.gymsoft.domain.dto.MonthWisePaymentDTO;
 import com.gymsoft.domain.dto.PaymentCountDTO;
 import com.gymsoft.domain.service.CustomerService;
 import com.gymsoft.domain.service.PaymentService;
@@ -29,10 +33,13 @@ public class DashboardController
     	CustemerCountDTO customerCountDTO = new CustemerCountDTO();
         int total = customerService.getTotalCount();
         int active = customerService.getActiveCustomers().size();
+        int aboutToDue = customerService.getAboutToDueCustomers().size();
 
         customerCountDTO.setTotalCustomers( total );
         customerCountDTO.setActiveCustomers( active );
-        customerCountDTO.setInActiveCustomers( total - active );
+        customerCountDTO.setAboutTodueCCustomers( aboutToDue ); 
+        
+        customerCountDTO.setInActiveCustomers( total - active - aboutToDue );
 
         return customerCountDTO;
     }
@@ -50,6 +57,8 @@ public class DashboardController
     	int weeklyCollection = paymentService.getWeeklyCollection();
     	int monthlyCollection = paymentService.getMonthlyCollection();
     	
+    	List<MonthWisePaymentDTO> list =  paymentService.getMonthWiseCollection( 2021 );
+    	
     	
     	paymentCountDTO.setTodayCollection( todayCollection );
     	paymentCountDTO.setWeeklyCollection( weeklyCollection );
@@ -59,5 +68,11 @@ public class DashboardController
     	paymentCountDTO.setWeeklyCount( weeklyCount );
 
         return paymentCountDTO;
+    }
+    
+    @PostMapping( value = "/monthWiseCollection" )
+    public List<MonthWisePaymentDTO> monthWiseCollection( @RequestBody Integer year )
+    {
+        return paymentService.getMonthWiseCollection( year );
     }
 }
