@@ -86,7 +86,11 @@ public class TokenProvider implements Serializable
         final Claims claims = claimsJws.getBody();
 
         final Collection<? extends GrantedAuthority> authorities =
-            Arrays.stream( claims.get( AUTHORITIES_KEY ).toString().split( "," ) ).map( SimpleGrantedAuthority::new ).collect( Collectors.toList() );
+            Arrays.stream( claims.get( AUTHORITIES_KEY )
+            	  .toString()
+            	  .split( "," ) )
+            	  .map( SimpleGrantedAuthority::new )
+            	  .collect( Collectors.toList() );
 
         return new UsernamePasswordAuthenticationToken( userDetails, "", authorities );
     }

@@ -1,7 +1,7 @@
 package com.gymsoft.domain.entity;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -53,9 +54,8 @@ public class User
     @JoinColumn( name = "id" )
     private UserInfo userInfo;
 
-    @OneToMany( cascade = CascadeType.ALL )
-    @JoinTable( name = "user_roles_mapping", joinColumns = @JoinColumn( name = "user_id" ), inverseJoinColumns = @JoinColumn( name = "role_id" ) )
-    @JsonIgnore
-    private List<Role> userRoles;
-
+    @ManyToMany( cascade = { CascadeType.MERGE, CascadeType.DETACH }, fetch = FetchType.EAGER )
+    @JoinTable( name = "users_roles", joinColumns = @JoinColumn( name = "user_id" ), inverseJoinColumns = @JoinColumn( name = "role_id" ) )
+    private Set<Role> userRoles;
+    
 }

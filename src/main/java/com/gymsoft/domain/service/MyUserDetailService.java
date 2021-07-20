@@ -1,9 +1,11 @@
 package com.gymsoft.domain.service;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,21 +19,21 @@ import com.gymsoft.domain.dto.UserDTO;
 import com.gymsoft.domain.entity.Role;
 import com.gymsoft.domain.entity.User;
 import com.gymsoft.domain.entity.UserInfo;
+import com.gymsoft.domain.repository.RoleRepository;
 import com.gymsoft.domain.repository.UserRepository;
 
 @Service( "myUserDetailService" )
 public class MyUserDetailService implements UserDetailsService
 {
 
+	@Autowired
     private UserRepository userRepository;
+	
+	@Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder bcryptEncoder;
-
-    MyUserDetailService( UserRepository userRepository )
-    {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername( String username )
@@ -60,20 +62,27 @@ public class MyUserDetailService implements UserDetailsService
         user.setAccountEnabled( "Y" );
         user.setAccountExpired( "N" );
         user.setAccountLocked( "N" );
-
         user.setEmail( userDto.getEmail() );
+        
         UserInfo userInfo = new UserInfo();
         userInfo.setFirstName( userDto.getFirstName() );
         userInfo.setLastName( userDto.getLastName() );
         userInfo.setNickName( userDto.getNickName() );
         userInfo.setBirthDate( userDto.getBirthDate() );
         userInfo.setUser( user );
-
-        Role role = new Role();
-        role.setName( "USER" );
+        
+        Set<Role> roles = new HashSet<Role>();
+        for( Role role : userDto.getRoles() ) 
+        {
+        	Optional<Role> tempRrole = roleRepository.findByName( role.getName() );
+        	if( tempRrole.isPresent() ) 
+        	{
+        		roles.add( tempRrole.get() );
+        	}
+        }
 
         user.setUserInfo( userInfo );
-        user.setUserRoles( Arrays.asList( role ) );
+        user.setUserRoles( roles );
 
         userRepository.save( user );
 
@@ -83,9 +92,7 @@ public class MyUserDetailService implements UserDetailsService
 
     public Optional<User> getUser( String username )
     {
-
         return userRepository.findByUsername( username );
-
     }
 
 }

@@ -1,6 +1,7 @@
 package com.gymsoft.domain.controller;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gymsoft.commons.CustomErrorResponse;
 import com.gymsoft.config.security.TokenProvider;
-import com.gymsoft.domain.auth.AuthToken;
+import com.gymsoft.domain.auth.AuthUser;
 import com.gymsoft.domain.auth.LoginUser;
+import com.gymsoft.domain.entity.User;
 import com.gymsoft.domain.service.MyUserDetailService;
 
 @CrossOrigin( origins = "*", maxAge = 3600 )
@@ -38,7 +40,7 @@ public class AuthenticationController
     private MyUserDetailService userService;
 
     @RequestMapping( value = "/generate-token", method = RequestMethod.POST )
-    public ResponseEntity<?> register( @RequestBody LoginUser loginUser )
+    public ResponseEntity<?> generateToken( @RequestBody LoginUser loginUser )
     {
 
         try
@@ -48,7 +50,17 @@ public class AuthenticationController
                                                                                              loginUser.getPassword() ) );
             SecurityContextHolder.getContext().setAuthentication( authentication );
             final String token = jwtTokenUtil.generateToken( authentication );
-            return ResponseEntity.ok( new AuthToken( token ) );
+            
+            Optional<User> userOptional = userService.getUser(loginUser.getUsername());
+            if( userOptional.isPresent() ) 
+            {
+            	AuthUser authUser = new AuthUser( userOptional.get() );
+            	authUser.setToken( token );
+            	return ResponseEntity.ok( authUser );
+            }
+            
+            return new ResponseEntity<>( "Please provide valid credentials", HttpStatus.UNAUTHORIZED );
+            
         }
         catch( BadCredentialsException e )
         {

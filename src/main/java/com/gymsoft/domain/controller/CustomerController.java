@@ -59,7 +59,7 @@ public class CustomerController
         {
             return customerService.getAboutToDueCustomers();
         }
-        if("deleted".equals( query ) ) 
+        if( "deleted".equals( query ) ) 
         {
         	return customerService.getDeletedCustomers();
         }

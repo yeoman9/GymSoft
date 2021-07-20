@@ -1,12 +1,16 @@
 package com.gymsoft.domain.auth;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gymsoft.domain.entity.Role;
 import com.gymsoft.domain.entity.User;
 
 import lombok.Data;
@@ -20,15 +24,25 @@ public class AuthUser implements UserDetails
      */
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     private String username;
+    @JsonIgnore
     private String password;
+    @JsonIgnore
     private String accountExpired;
+    @JsonIgnore
     private String accountLocked;
+    @JsonIgnore
     private String accountEnabled;
+    @JsonIgnore
     private Long userId;
+    @JsonIgnore
+    private User user;
+    private String token;
 
     public AuthUser( User user )
     {
+    	this.user = user;
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.accountEnabled = user.getAccountEnabled();
@@ -40,7 +54,14 @@ public class AuthUser implements UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return Arrays.asList( new SimpleGrantedAuthority( "ROLE_USER" ) );
+    	Set<Role> roles = user.getUserRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+         
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+         
+        return authorities;
     }
 
     @Override
