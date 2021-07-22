@@ -16,11 +16,15 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude="user")
+@ToString(exclude="user")
 @Table( name = "users_details" )
 public class UserInfo
 {
