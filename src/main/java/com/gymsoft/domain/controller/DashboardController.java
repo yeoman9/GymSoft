@@ -57,9 +57,6 @@ public class DashboardController
     	int weeklyCollection = paymentService.getWeeklyCollection();
     	int monthlyCollection = paymentService.getMonthlyCollection();
     	
-    	List<MonthWisePaymentDTO> list =  paymentService.getMonthWiseCollection( 2021 );
-    	
-    	
     	paymentCountDTO.setTodayCollection( todayCollection );
     	paymentCountDTO.setWeeklyCollection( weeklyCollection );
     	paymentCountDTO.setMonthlyCollection( monthlyCollection );

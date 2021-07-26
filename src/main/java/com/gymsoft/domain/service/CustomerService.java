@@ -151,7 +151,7 @@ public class CustomerService
         while( itr.hasNext() )
         {
             Customer c = itr.next();
-            if( !c.isAboutToDue() || c.isDeleted() )
+            if( ( !c.isAboutToDue() && !c.isJustDue() ) || c.isDeleted() )
             {
                 itr.remove();
             }

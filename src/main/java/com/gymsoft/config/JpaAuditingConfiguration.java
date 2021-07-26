@@ -19,18 +19,6 @@ public class JpaAuditingConfiguration
     @Bean
     public AuditorAware<Long> auditorProvider()
     {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if( auth != null )
-        {
-            AuthUser authUser = (AuthUser)auth.getPrincipal();
-            if( authUser != null )
-            {
-                long userId = authUser.getUserId();
-                return () -> Optional.ofNullable( userId );
-            }
-        }
-
-        return () -> Optional.ofNullable( -1L );
+        return new AuditorAwareImpl();
     }
 }

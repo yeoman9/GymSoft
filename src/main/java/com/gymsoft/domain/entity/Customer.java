@@ -67,5 +67,12 @@ public class Customer extends Auditable<Long>
     	LocalDate date = LocalDate.now().plusDays( 3 );
         return isActive() && lastDate.before( Date.from( date.atStartOfDay( ZoneId.systemDefault() ).toInstant() ) );
     }
+    
+    @Transient
+    public boolean isJustDue()
+    {
+    	LocalDate date = LocalDate.now().minusDays( 3 );
+        return !isActive() && lastDate.after( Date.from( date.atStartOfDay( ZoneId.systemDefault() ).toInstant() ) );
+    }
 
 }
