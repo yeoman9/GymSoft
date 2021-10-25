@@ -96,6 +96,11 @@ public class PaymentService
 		return paymentRepository.todayData().size();
 	}
 	
+	public List<Payment> getTodayData() {
+		
+		return paymentRepository.todayData();
+	}
+	
 	public int getTodayCollection() {
 		
 		return paymentRepository.todayData()
@@ -109,6 +114,11 @@ public class PaymentService
 		return paymentRepository.weeklyData().size();
 	}
 	
+	public List<Payment> getWeeklyData() {
+		
+		return paymentRepository.weeklyData();
+	}
+	
 	public int getWeeklyCollection() {
 		
 		return paymentRepository.weeklyData()
@@ -120,6 +130,11 @@ public class PaymentService
 	public int getMonthlyCount() {
 		
 		return paymentRepository.monthlyData().size();
+	}
+	
+	public List<Payment> getMonthlyData() {
+		
+		return paymentRepository.monthlyData();
 	}
 	
 	public int getMonthlyCollection() {

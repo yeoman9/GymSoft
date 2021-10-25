@@ -52,6 +52,18 @@ public class PaymentController
         {
             return paymentService.getAllPayments();
         }
+        else if( "todayData".equals( query ) )
+        {
+            return paymentService.getTodayData();
+        }
+        else if( "weeklyData".equals( query ) )
+        {
+            return paymentService.getWeeklyData();
+        }
+        else if( "monthlyData".equals( query ) )
+        {
+            return paymentService.getMonthlyData();
+        }
         else
         {
             try
