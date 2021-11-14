@@ -37,7 +37,7 @@ public class DashboardController
 
         customerCountDTO.setTotalCustomers( total );
         customerCountDTO.setActiveCustomers( active );
-        customerCountDTO.setAboutTodueCCustomers( aboutToDue ); 
+        customerCountDTO.setAboutToDueCustomers( aboutToDue );
         
         customerCountDTO.setInActiveCustomers( total - active - aboutToDue );
 

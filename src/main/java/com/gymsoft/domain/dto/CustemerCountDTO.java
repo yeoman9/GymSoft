@@ -8,5 +8,5 @@ public class CustemerCountDTO
     private Integer totalCustomers;
     private Integer activeCustomers;
     private Integer inActiveCustomers;
-    private Integer aboutTodueCCustomers;
+    private Integer aboutToDueCustomers;
 }
